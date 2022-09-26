@@ -45,3 +45,26 @@
 .send-message-form button {
   display: none;
 }
+
+.center {
+  text-align: center;
+  width: 100%;
+  border: none;
+  font-size: 16px;
+  padding: 10px;
+}
+
+#container {
+  width: 50px;
+  height: 50px;
+  float: left;
+  border-radius: 100px;
+  margin-right: 10px;
+}
+#name {
+  width: 100%;
+  text-align: center;
+  color: white;
+  font-size: 22px;
+  line-height: 50px;
+}
