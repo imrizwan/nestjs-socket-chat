@@ -20,13 +20,11 @@ function App() {
   }, []);
 
   useEffect(() => {
+    socket.io.on("connection", (error) => {
+      // ...
+    });
     socket.on('connect', () => {
       console.log('Connected');
-
-      socket.emit('events', { test: 'test' });
-      socket.emit('identity', 0, response =>
-        console.log('Identity:', response),
-      );
       setIsConnected(true);
     });
 
@@ -34,25 +32,18 @@ function App() {
       setIsConnected(false);
     });
 
-    socket.on('pong', () => {
-      setLastPong(new Date().toISOString());
+    socket.on("message", async (arg1) => {
+      try {
+        console.log("listening", arg1); // 1
+      } catch (e) {
+        console.log(e);
+      }
     });
 
     return () => {
-      socket.off('connect');
-      socket.off('disconnect');
-      socket.off('pong');
+      socket.removeAllListeners();
     };
-  }, []);
-
-  useEffect(() => {
-    // ...
-    return () => {
-      socket.off('connect');
-      socket.off('disconnect');
-      socket.off('pong');
-    };
-  }, []);
+  });
 
   const sendMessage = (msg) => {
     try {
