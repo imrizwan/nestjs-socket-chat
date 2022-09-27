@@ -10,7 +10,44 @@ function App() {
   const [fields, setFields] = useState({ messages: [], message: '', name: '', nameDisabled: false, color: '' });
   const [isConnected, setIsConnected] = useState(socket.connected);
 
+  const createNotification = (message) => {
+    const notification = new Notification(message.name, {
+      body: message.message,
+      icon: `https://ui-avatars.com/api/?name=${message.name}&background=${message.color}&color=fff`
+    });
+    notification.onclick = () => {
+      window.focus();
+    }
+  }
+
+  function notifyMe() {
+    if (!("Notification" in window)) {
+      // Check if the browser supports notifications
+      alert("This browser does not support desktop notification");
+    } else if (Notification.permission === "granted") {
+      // Check whether notification permissions have already been granted;
+      // if so, create a notification
+      // const notification = new Notification("Hi there!");
+      // …
+    } else if (Notification.permission !== "denied") {
+      // We need to ask the user for permission
+      Notification.requestPermission().then((permission) => {
+        // If the user accepts, let's create a notification
+        if (permission === "granted") {
+          const notification = new Notification("Hi there!");
+          // …
+        }
+      });
+    }
+
+    // At last, if the user has denied notifications, and you
+    // want to be respectful there is no need to bother them anymore.
+  }
+
+
+
   useEffect(() => {
+    notifyMe();
     let name = localStorage.getItem('name');
     let color = localStorage.getItem('color');
     let isDisabled = name ? true : false;
@@ -33,7 +70,8 @@ function App() {
     socket.on("message", async (arg1) => {
       try {
         let temp = [arg1, ...fields.messages];
-        setFields({ ...fields, messages: temp, message: '' });
+        createNotification(arg1);
+        setFields({ ...fields, messages: temp });
       } catch (e) {
         console.log(e);
       }
@@ -56,7 +94,7 @@ function App() {
     <div className="App">
       <div className="center">
         <div>
-          <p>Status: {isConnected ? 'Connected': 'Disconnected'}</p>
+          <p>Status: {isConnected ? 'Connected' : 'Disconnected'}</p>
         </div>
         Name: <input
           disabled={fields.nameDisabled}
