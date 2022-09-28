@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm';
-
+import { Message } from "../database/entities/message/message.entity";
 export const databaseProviders = [
     {
         provide: 'DATA_SOURCE',
@@ -11,9 +11,9 @@ export const databaseProviders = [
                 username: 'sammy',
                 password: 'Hello@123',
                 database: 'chat',
-                // entities: [
-                //     __dirname + '/../**/*.entity{.ts,.js}',
-                // ],
+                entities: [
+                    Message
+                ],
                 synchronize: true,
             });
 

@@ -3,13 +3,12 @@ import {
     SubscribeMessage,
     WebSocketGateway,
     WebSocketServer,
-    WsResponse,
     ConnectedSocket
 } from '@nestjs/websockets';
-import { Observable, from } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Inject } from '@nestjs/common';
 import { Server, Socket } from 'socket.io';
-
+import { MessageService } from 'src/message/message.service';
+import { Message } from '../database/entities/message/message.entity';
 @WebSocketGateway({
     cors: {
         origin: 'http://172.16.25.31:3000',
@@ -19,10 +18,14 @@ import { Server, Socket } from 'socket.io';
 export class EventsGateway {
     @WebSocketServer()
     server: Server;
+    constructor(@Inject(MessageService)
+    private readonly messageService: MessageService
+    ) { }
 
     @SubscribeMessage('message')
-    async identity(@MessageBody() data: number, @ConnectedSocket() socket: Socket): Promise<number> {
+    async identity(@MessageBody() data: Message, @ConnectedSocket() socket: Socket): Promise<Message> {
         socket.broadcast.emit('message', data);
+        await this.messageService.addMessage(data);
         return data;
     }
 }

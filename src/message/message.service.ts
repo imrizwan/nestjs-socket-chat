@@ -14,10 +14,11 @@ export class MessageService {
   }
 
   async addMessage(message: Message) {
-    return this.messageRepository
+    let ans = await this.messageRepository
       .createQueryBuilder()
       .insert()
       .into(Message)
       .values(message)
+    return ans;
   }
 }
