@@ -18,7 +18,7 @@ export class MessageService {
       .createQueryBuilder()
       .insert()
       .into(Message)
-      .values(message)
+      .values(message).execute()
     return ans;
   }
 }

@@ -7,6 +7,9 @@ export class Message {
 
   @Column()
   type: string;
+  
+  @Column()
+  color: string;
 
   @Column()
   message: string;

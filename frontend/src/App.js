@@ -44,16 +44,19 @@ function App() {
     // want to be respectful there is no need to bother them anymore.
   }
 
-
-
   useEffect(() => {
-    notifyMe();
-    let name = localStorage.getItem('name');
-    let color = localStorage.getItem('color');
-    let isDisabled = name ? true : false;
-    name = name ? name : '';
-    color = color ? color : '';
-    setFields({ ...fields, nameDisabled: isDisabled, name, color });
+    const fetchChat = async () => {
+      notifyMe();
+      let name = localStorage.getItem('name');
+      let color = localStorage.getItem('color');
+      let isDisabled = name ? true : false;
+      name = name ? name : '';
+      color = color ? color : '';
+      let response = await fetch('/message/all')
+      let data = await response.json();
+      setFields({ ...fields, nameDisabled: isDisabled, name, color, messages: data });
+    }
+    fetchChat()
     // eslint-disable-next-line
   }, []);
 
@@ -84,7 +87,7 @@ function App() {
 
   const sendMessage = (msg) => {
     try {
-      socket.emit('message', msg, (data) => { console.log(data) });
+      socket.emit('message', msg, (data) => {  });
     } catch (e) {
       console.log(e);
     }
@@ -149,7 +152,6 @@ function App() {
                   return alert("Please enter your name");
                 } else {
                   let msg = { type: 'sent', message: fields.message, datetime: new Date(), name: fields.name, color: fields.color };
-                  console.log("msg", msg)
                   let temp = [msg, ...fields.messages];
                   setFields({ ...fields, messages: temp, message: '' });
                   sendMessage(msg);
