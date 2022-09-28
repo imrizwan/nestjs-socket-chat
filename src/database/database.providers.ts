@@ -1,23 +1,22 @@
 import { DataSource } from 'typeorm';
-import { Message } from "../database/entities/message/message.entity";
+import { Message } from '../database/entities/message/message.entity';
+import Configuration from '../config/configuration';
 export const databaseProviders = [
-    {
-        provide: 'DATA_SOURCE',
-        useFactory: async () => {
-            const dataSource = new DataSource({
-                type: 'mysql',
-                host: 'localhost',
-                port: 3306,
-                username: 'sammy',
-                password: 'Hello@123',
-                database: 'chat',
-                entities: [
-                    Message
-                ],
-                synchronize: true,
-            });
+  {
+    provide: 'DATA_SOURCE',
+    useFactory: async () => {
+      const dataSource = new DataSource({
+        type: 'mysql',
+        host: process.env.DB_HOST,
+        port: parseInt(process.env.DB_PORT),
+        username: process.env.DB_USERNAME,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_NAME,
+        entities: [Message],
+        synchronize: true,
+      });
 
-            return dataSource.initialize();
-        },
+      return dataSource.initialize();
     },
+  },
 ];

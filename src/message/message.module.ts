@@ -5,10 +5,7 @@ import { MessageService } from './message.service';
 import { MessageController } from './message.controller';
 @Module({
   imports: [DatabaseModule],
-  providers: [
-    ...messageProviders,
-    MessageService,
-  ],
+  providers: [...messageProviders, MessageService],
   exports: [MessageService],
   controllers: [MessageController],
 })

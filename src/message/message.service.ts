@@ -7,7 +7,7 @@ export class MessageService {
   constructor(
     @Inject('MESSAGE_REPOSITORY')
     private messageRepository: Repository<Message>,
-  ) { }
+  ) {}
 
   async findAll(): Promise<Message[]> {
     return this.messageRepository.find({ order: { datetime: 'DESC' } });
@@ -18,7 +18,8 @@ export class MessageService {
       .createQueryBuilder()
       .insert()
       .into(Message)
-      .values(message).execute()
+      .values(message)
+      .execute();
     return ans;
   }
 }
