@@ -1,6 +1,5 @@
 import { DataSource } from 'typeorm';
 import { Message } from '../database/entities/message/message.entity';
-import Configuration from '../config/configuration';
 export const databaseProviders = [
   {
     provide: 'DATA_SOURCE',

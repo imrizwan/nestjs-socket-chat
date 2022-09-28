@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import moment from "moment";
 import io from 'socket.io-client';
 import './App.css';
-const socket = io('http://172.16.25.31:4000');
+const socket = io('/');
 function App() {
 
   const colors = ["#e74c3c", "#8e44ad", "#3498db", "#2ecc71", "#c0392b", "#7d3c98", "#2980b9", "#27ae60"];

@@ -11,7 +11,7 @@ import { MessageService } from 'src/message/message.service';
 import { Message } from '../database/entities/message/message.entity';
 @WebSocketGateway({
   cors: {
-    origin: 'http://172.16.25.31:3000',
+    origin: process.env.origin,
   },
 })
 export class EventsGateway {
