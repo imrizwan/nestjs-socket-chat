@@ -10,7 +10,7 @@ export class MessageService {
   ) { }
 
   async findAll(): Promise<Message[]> {
-    return this.messageRepository.find();
+    return this.messageRepository.find({ order: { datetime: 'DESC' } });
   }
 
   async addMessage(message: Message) {
