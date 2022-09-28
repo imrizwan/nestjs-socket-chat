@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common';
 import { EventsModule } from './events/events.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { DatabaseModule } from './database/database.module';
+import { MessageModule } from './message/message.module';
 @Module({
   imports: [
     DatabaseModule,
-    EventsModule
+    EventsModule,
+    MessageModule
   ],
 })
 export class AppModule { }

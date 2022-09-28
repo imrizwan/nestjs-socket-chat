@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { DatabaseModule } from '../../database.module';
+import { DatabaseModule } from '../database/database.module';
 import { messageProviders } from './message.providers';
 import { MessageService } from './message.service';
 
@@ -9,5 +9,6 @@ import { MessageService } from './message.service';
     ...messageProviders,
     MessageService,
   ],
+  exports: [MessageService]
 })
 export class MessageModule {}

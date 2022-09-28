@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm';
-import { Message } from './message.entity';
+import { Message } from '../database/entities/message/message.entity';
 
 export const messageProviders = [
   {
